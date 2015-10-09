@@ -64,7 +64,6 @@ def greedy(player_no,board_two,board_one):
                                                                 board_one[j]+=1
                                                                 j++
                                                        
-                                                        
                                                     else: # more beads - so adding to player 2's board
                                                             if m!=0:
                                                                 i-=1
@@ -76,13 +75,13 @@ def greedy(player_no,board_two,board_one):
                                                                     j++
                                             
                                                     
-                                                  
+                                         #---BELOW NOT DONE YET---     
                                          #recursively have to check all moves to find the max eval and then choose the move
-                                        l = len(board_two)-1
-                                        max = board_one[0] - board_two[l] #eval function
-                                    else:
-                                        # player 2 - havent done
-                                        max = board_two[l] - mancala_one[0]
+                                            l = len(board_two)-1
+                                            max = board_one[0] - board_two[l] #eval function
+                                            else:
+                                            # if player 2 starts - havent done
+                                            max = board_two[l] - mancala_one[0]
 
                                     
                                                             
