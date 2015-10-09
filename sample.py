@@ -51,21 +51,33 @@ def greedy(player_no,board_two,board_one):
                                                 while i!=0:
                                                     if j <= k:
                                                         i-=1
-                                                        #condition 1- ENDS IN MANCALA
-                                                        #condition 2- ENDS IN EMPTY PIT ON SAME SIDE
-                                                        board_one[j]+=1
-                                                        j++
-                                                    else:
-                                                        if m!=0:
-                                                            i-=1
-                                                            board_two[m]+=1
-                                                            m--
-                                                        else
-                                                            j=0
-                                                            board_one[j]+=1
-                                                            j++
+                                                        #condition 1- ENDS IN MANCALA-Free turn
+                                                        if (j == k) and (i == 0):
+                                                             board_one[j]+=1
+                                                             break
+                                                        #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
+                                                        elif (i == 0) and (board_one[j] == 0):
+                                                            board_one[j] = 0
+                                                            #mancala 1 will get beads from both player1 and opp pit
+                                                            board_one[k] = board_one[k] + board_two[k+1]
+                                                        else:
+                                                                board_one[j]+=1
+                                                                j++
+                                                       
+                                                        
+                                                    else: # more beads - so adding to player 2's board
+                                                            if m!=0:
+                                                                i-=1
+                                                                board_two[m]+=1
+                                                                m--
+                                                            else:
+                                                                    j=0
+                                                                    board_one[j]+=1
+                                                                    j++
+                                            
                                                     
-                                                
+                                                  
+                                         #recursively have to check all moves to find the max eval and then choose the move
                                         l = len(board_two)-1
                                         max = board_one[0] - board_two[l] #eval function
                                     else:
