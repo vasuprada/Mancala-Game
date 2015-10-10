@@ -130,7 +130,7 @@ def main():
     InputFileName = "input_1.txt"
     OutputFileName = "output.txt"
     task = get_task(InputFileName)
-    print task
+    #print task
 
     input_file_handle = open(InputFileName,'r')
     output_file_handle = open(OutputFileName, 'w')
@@ -164,4 +164,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
