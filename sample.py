@@ -9,8 +9,8 @@ board_two=""
 board_one=""
 mancala_two=""
 mancala_one=""
-final_one = ""
-final_two = ""
+final_one =""
+final_two =""
 
 
 
@@ -31,13 +31,16 @@ def read_board(file_handle):
                         global mancala_one
        
     
-                        task = file_handle.readline().rstrip('\n')
-                        player_no = file_handle.readline().rstrip('\n')
-                        cut_off_depth = file_handle.readline().rstrip('\n')
-                        board_two = (file_handle.readline().rstrip('\n').split(' '))
-                        board_one = (file_handle.readline().rstrip('\n').split(' '))
-                        mancala_two = file_handle.readline().rstrip('\n');
-                        mancala_one = file_handle.readline().rstrip('\n');
+                        task = int(file_handle.readline().rstrip('\n'))
+                        
+                        player_no = int(file_handle.readline().rstrip('\n'))
+                        cut_off_depth = int(file_handle.readline().rstrip('\n'))
+                        test_two = (file_handle.readline().rstrip('\n').split(' '))
+                        test_one = (file_handle.readline().rstrip('\n').split(' '))
+                        board_two = map(int,test_two)
+                        board_one = map(int,test_one)
+                        mancala_two = int(file_handle.readline().rstrip('\n'));
+                        mancala_one = int(file_handle.readline().rstrip('\n'));
 
                                         
 def greedy(player_no,board_two,board_one):
@@ -59,14 +62,14 @@ def greedy(player_no,board_two,board_one):
                                             len_one = len(dummy_one)-1 #k
                                             m = len(dummy_two)-1
                                             max_eval = dummy_one[len_one] - dummy_two[0]
-                                            dummy_one[picked_index]=0
+                                            dummy_one[picked_index]= 0
 
-                                            while picked_value!=0:
+                                            while picked_value != 0:
                                                 if start_from <= len_one:
-                                                    picked_value-=1
+                                                    picked_value -= 1
                                                     #condition 1- ENDS IN MANCALA-Free turn
                                                     if (start_from == len_one) and (picked_value == 0):
-                                                        dummy_one[len_one]+=1
+                                                        dummy_one[len_one]+= 1
                                                         #greedy call
                                                         greedy(player_no,dummy_two,dummy_one)
                                                         break
@@ -129,7 +132,7 @@ def main():
     #InputFileName = str(sys.argv[2])
     InputFileName = "input_1.txt"
     OutputFileName = "output.txt"
-    task = get_task(InputFileName)
+    #task = get_task(InputFileName)
     #print task
 
     input_file_handle = open(InputFileName,'r')
@@ -140,7 +143,7 @@ def main():
     read_board(input_file_handle)
     len_one = len(board_one)-1
     len_two = len(board_two)-1
-    if task == '1':
+    if task == 1:
             #output_file_handle.write(str(UCS()) + '\n')
             board_one.append(mancala_one) # player 1 with mancala at the end
             [mancala_two] + board_two     # player 2 with mancala in the beginning
