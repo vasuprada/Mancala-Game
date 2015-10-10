@@ -50,6 +50,7 @@ def greedy(player_no,board_two,board_one):
                                     for x in dummy_one:
                                         print x,
                                     print
+                                    print
                                     
                                     
                                     if player_no == 1:
@@ -59,10 +60,14 @@ def greedy(player_no,board_two,board_one):
                                                 
                                             picked_index = start
                                             picked_value = dummy_one[picked_index]
-                                            start_from = start+1       #j
+                                            start_from = start+1 #j
+                                            #print start_from
                                             len_one = len(dummy_one)-1 #k
+                                            #print len_one
                                             m = len(dummy_two)-1
+                                            #print  m
                                             max_eval = dummy_one[len_one] - dummy_two[0]
+                                            #print max_eval
                                             dummy_one[picked_index]= 0
 
                                             while picked_value != 0:
@@ -142,13 +147,13 @@ def main():
     
 
     read_board(input_file_handle)
-    print task
+    #print task
     len_one = len(board_one)-1
     len_two = len(board_two)-1
     if task == 1:
             #output_file_handle.write(str(UCS()) + '\n')
             board_one.append(mancala_one) # player 1 with mancala at the end
-            [mancala_two] + board_two     # player 2 with mancala in the beginning
+            board_two = [mancala_two] + board_two     # player 2 with mancala in the beginning
             greedy(player_no,board_two,board_one)
             for i in final_one:
                 print i,
