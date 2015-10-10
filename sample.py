@@ -39,12 +39,14 @@ def read_board(file_handle):
 
                                         
 def greedy(player_no,board_two,board_one):
-                                    global player_no
+                                    #global player_no
                                     global board_two
                                     global board_one
+                                    #board_two_dummy = list(board_two)
+                                    #board_one_dummy = list(board_one)
 
-                                    dummy_one = board_one
-                                    dummy_two = board_two
+                                    dummy_one = list(board_two)
+                                    dummy_two = list(board_two)
                                     mancala1 = dummy_one[len(dummy_one)-1]
                                     mancala2 = dummy_two[0]
                                     
@@ -81,31 +83,31 @@ def greedy(player_no,board_two,board_one):
                                                         
                                                         if (max_eval < (dummy_one[len_one] - dummy_two[0])):
                                                             max_eval = dummy_one[len_one] - dummy_two[0]
-                                                            final_one = dummy_one
-                                                            final_two = dummy_two
+                                                            final_one = list(dummy_one)
+                                                            final_two = list(dummy_two)
                                                     #conditon 3 - Just dropping beads one by one
                                                     else:
-                                                        dummy_one[start_from]+= 1
-                                                        start_from++
+                                                        dummy_one[start_from] += 1
+                                                        start_from += 1
                                                        
                                                 else: # more beads - so adding to player 2's board
                                                     start_from=0
                                                     if m!=0:
-                                                        dummy_one[start]-=1
-                                                        dummy_two[m]+=1
-                                                        m--
+                                                        dummy_one[start] -= 1
+                                                        dummy_two[m] += 1
+                                                        m -= 1
                                                         if picked_value == 0:
                                                             if (max_eval < dummy_one[len_one] - dummy_two[0]):
                                                                 max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                final_one = dummy_one
-                                                                final_two = dummy_two
+                                                                final_one = list(dummy_one)
+                                                                final_two = list(dummy_two)
 
                                                     else:
-                                                        dummy_one[start_from]+=1
-                                                        start_from++
+                                                        dummy_one[start_from] += 1
+                                                        start_from += 1
                                             
-                                            dummy_one = board_one
-                                            dummy_two = board_two
+                                            dummy_one = list(board_one)
+                                            dummy_two = list(board_two)
                                         
                                     #Else if player 2 
                                             
