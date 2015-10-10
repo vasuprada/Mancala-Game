@@ -49,64 +49,63 @@ def greedy(player_no,board_two,board_one):
                                     mancala2 = dummy_two[0]
                                     
                                     if player_no == '1':
-                                            for start in range(0,len(dummy_one)):
-                                                if dummy_one[start] == 0:
-                                                    continue
+                                        for start in range(0,len(dummy_one)):
+                                            if dummy_one[start] == 0:
+                                                continue
                                                 
-                                                picked_index = start
-                                                picked_value = dummy_one[picked_index]
-                                                start_from = start+1       #j
-                                                len_one = len(dummy_one)-1 #k
-                                                m = len(dummy_two)-1
-                                                max_eval = dummy_one[len_one] - dummy_two[0]
-                                                dummy_one[picked_index]=0
+                                            picked_index = start
+                                            picked_value = dummy_one[picked_index]
+                                            start_from = start+1       #j
+                                            len_one = len(dummy_one)-1 #k
+                                            m = len(dummy_two)-1
+                                            max_eval = dummy_one[len_one] - dummy_two[0]
+                                            dummy_one[picked_index]=0
 
-                                                while picked_value!=0:
-                                                    if start_from <= len_one:
-                                                        picked_value-=1
-                                                        #condition 1- ENDS IN MANCALA-Free turn
-                                                        if (start_from == len_one) and (picked_value == 0):
-                                                             dummy_one[len_one]+=1
-                                                             #greedy call
-                                                             greedy(player_no,dummy_two,dummy_one)
-                                                             break
+                                            while picked_value!=0:
+                                                if start_from <= len_one:
+                                                    picked_value-=1
+                                                    #condition 1- ENDS IN MANCALA-Free turn
+                                                    if (start_from == len_one) and (picked_value == 0):
+                                                        dummy_one[len_one]+=1
+                                                        #greedy call
+                                                        greedy(player_no,dummy_two,dummy_one)
+                                                        break
                                                              
-                                                        #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
-                                                        elif (picked_value == 0) and (dummy_one[start_from] == 0):
-                                                            #mancala 1 will get beads from both player1 and opp pit
-                                                            dummy_one[start_from] = 1
-                                                            dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
-                                                            dummy_one[start_from] = 0
-                                                            dummy_two[start_from+1]= 0
-                                                            if (max_eval < dummy_one[len_one] - dummy_two[0]):
-                                                                    max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                    final_one = dummy_one
-                                                                    final_two = dummy_two
-                                                                    
-                                                            
-                                                            
-                                                        else:
-                                                                dummy_one[start_from]+= 1
-                                                                start_from++
+                                                    #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
+                                                    elif (picked_value == 0) and (dummy_one[start_from] == 0):
+                                                        #mancala 1 will get beads from both player1 and opp pit
+                                                        dummy_one[start_from] = 1
+                                                        dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
+                                                        dummy_one[start_from] = 0
+                                                        dummy_two[start_from+1]= 0
+                                                        
+                                                        if (max_eval < (dummy_one[len_one] - dummy_two[0])):
+                                                            max_eval = dummy_one[len_one] - dummy_two[0]
+                                                            final_one = dummy_one
+                                                            final_two = dummy_two
+                                                    #conditon 3 - Just dropping beads one by one
+                                                    else:
+                                                        dummy_one[start_from]+= 1
+                                                        start_from++
                                                        
-                                                    else: # more beads - so adding to player 2's board
-                                                            start_from=0
-                                                            if m!=0:
-                                                                dummy_one[start]-=1
-                                                                dummy_two[m]+=1
-                                                                m--
-                                                                if picked_value == 0:
-                                                                    if (max_eval < dummy_one[len_one] - dummy_two[0]):
-                                                                        max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                        final_one = dummy_one
-                                                                        final_two = dummy_two
+                                                else: # more beads - so adding to player 2's board
+                                                    start_from=0
+                                                    if m!=0:
+                                                        dummy_one[start]-=1
+                                                        dummy_two[m]+=1
+                                                        m--
+                                                        if picked_value == 0:
+                                                            if (max_eval < dummy_one[len_one] - dummy_two[0]):
+                                                                max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                final_one = dummy_one
+                                                                final_two = dummy_two
 
-                                                            else:
-                                                                    dummy_one[start_from]+=1
-                                                                    start_from++
+                                                    else:
+                                                        dummy_one[start_from]+=1
+                                                        start_from++
                                             
-                                                   dummy_one = board_one
-                                                   dummy_two = board_two
+                                            dummy_one = board_one
+                                            dummy_two = board_two
                                         
                                     #Else if player 2 
                                             
