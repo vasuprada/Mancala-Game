@@ -45,10 +45,7 @@ def check(player_no,board_two,board_one):
     max_eval = board_one[l] - board_two[0]
     for start in range(0,len(board_one)):
             greedy(start,player_no,board_two,board_one)
-            if max_eval < board_one[l] - board_two[0]: #eval function
-                    max_eval = board_one[l] - board_two[0]   
-            else:
-                continue
+            
             
                                             
 
@@ -80,18 +77,19 @@ def greedy(start,player_no,board_two,board_one):
                                                                 j++
                                                        
                                                     else: # more beads - so adding to player 2's board
+                                                            j=0
                                                             if m!=0:
                                                                 board_one[start]-=1
                                                                 board_two[m]+=1
                                                                 m--
                                                             else:
-                                                                    j=0
+                                                                    
                                                                     board_one[j]+=1
                                                                     j++
                                             
                                                     
-                                        # ---else part --
-                                        #same thing for when Player_no = '2'
+                                        
+                                        #Else if player 2 
                                             
 
                                     
