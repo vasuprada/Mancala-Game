@@ -14,13 +14,7 @@ final_two =""
 
 
 
-def get_task(FileName):
-    with open(FileName,"r") as file_handle:
-        try:
-            return int(file_handle.readline().rstrip('\n'))
-        except ValueError:
-            print "Please check if you have added the task no at the top of the test case set"
-            
+           
 def read_board(file_handle):
                         global task
                         global player_no
@@ -49,9 +43,16 @@ def greedy(player_no,board_two,board_one):
                                     
                                     dummy_one = list(board_one)
                                     dummy_two = list(board_two)
-                               
+
+                                    for y in dummy_two:
+                                        print y,
+                                    print
+                                    for x in dummy_one:
+                                        print x,
+                                    print
                                     
-                                    if player_no == '1':
+                                    
+                                    if player_no == 1:
                                         for start in range(0,len(dummy_one)):
                                             if dummy_one[start] == 0:
                                                 continue
@@ -133,7 +134,7 @@ def main():
     InputFileName = "input_1.txt"
     OutputFileName = "output.txt"
     #task = get_task(InputFileName)
-    #print task
+   
 
     input_file_handle = open(InputFileName,'r')
     output_file_handle = open(OutputFileName, 'w')
@@ -141,6 +142,7 @@ def main():
     
 
     read_board(input_file_handle)
+    print task
     len_one = len(board_one)-1
     len_two = len(board_two)-1
     if task == 1:
