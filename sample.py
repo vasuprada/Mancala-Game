@@ -37,50 +37,55 @@ def read_board(file_handle):
                         mancala_two = file_handle.readline().rstrip('\n');
                         mancala_one = file_handle.readline().rstrip('\n');
 
-'''def check(player_no,board_two,board_one):
-    global player_no
-    global board_two
-    global board_one
-    l = len(board_one)-1
-    max_eval = board_one[l] - board_two[0]
-    for start in range(0,len(board_one)):
-            if board_one[start]== 0:
-                continue
-            
-            greedy(start,player_no,board_two,board_one)'''
                                         
 def greedy(player_no,board_two,board_one):
                                     global player_no
                                     global board_two
                                     global board_one
-                                   
+
+                                    dummy_one = board_one
+                                    dummy_two = board_two
+                                    mancala1 = dummy_one[len(dummy_one)-1]
+                                    mancala2 = dummy_two[0]
+                                    
                                     if player_no == '1':
-                                            #if board_one[start] > 0:
-                                            for start in range(0,len(board_one)):
-                                                if board_one[start] == 0:
+                                            for start in range(0,len(dummy_one)):
+                                                if dummy_one[start] == 0:
                                                     continue
                                                 
                                                 picked_index = start
-                                                picked_value = board_one[start]
+                                                picked_value = dummy_one[picked_index]
                                                 start_from = start+1       #j
-                                                len_one = len(board_one)-1 #k
-                                                m = len(board_two)-1 
+                                                len_one = len(dummy_one)-1 #k
+                                                m = len(dummy_two)-1
+                                                max_eval = dummy_one[len_one] - dummy_two[0]
+                                                dummy_one[picked_index]=0
 
                                                 while picked_value!=0:
                                                     if start_from <= len_one:
                                                         picked_value-=1
                                                         #condition 1- ENDS IN MANCALA-Free turn
                                                         if (start_from == len_one) and (picked_value == 0):
-                                                             board_one[len_one]+=1
+                                                             dummy_one[len_one]+=1
+                                                             #greedy call
+                                                             greedy(player_no,dummy_two,dummy_one)
                                                              break
+                                                             
                                                         #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
-                                                        elif (picked_value == 0) and (board_one[start_from] == 0):
+                                                        elif (picked_value == 0) and (dummy_one[start_from] == 0):
                                                             #mancala 1 will get beads from both player1 and opp pit
-                                                            board_one[start_from] = 1
-                                                            board_one[len_one] = board_one[len_one] + board_one[start_from]+ board_two[start_from+1]
-                                                            board_one[start_from] = 0
-                                                            board_two[start_from+1]= 0
-                                                            break
+                                                            dummy_one[start_from] = 1
+                                                            dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
+                                                            dummy_one[start_from] = 0
+                                                            dummy_two[start_from+1]= 0
+                                                            if (max_eval > dummy_one[len_one] - dummy_two[0]):
+                                                                    max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                    board_one = dummy_one
+                                                                    board_two = dummy_two
+                                                                    mancala1 = max_eval
+                                                                    mancala2 = dummy_two[0]
+                                                            
+                                                            
                                                         else:
                                                                 board_one[start_from]+=1
                                                                 start_from++
@@ -91,13 +96,20 @@ def greedy(player_no,board_two,board_one):
                                                                 board_one[start]-=1
                                                                 board_two[m]+=1
                                                                 m--
+                                                                if picked_value == 0:
+                                                                    if (max_eval > dummy_one[len_one] - dummy_two[0]):
+                                                                        max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                        board_one = dummy_one
+                                                                        board_two = dummy_two
+                                                                        mancala1 = max_eval
+                                                                        mancala2 = dummy_two[0]
                                                             else:
                                                                     board_one[start_from]+=1
                                                                     start_from++
                                             
                                                     
                                         
-                                        #Else if player 2 
+                                    #Else if player 2 
                                             
 
                                     
@@ -132,10 +144,7 @@ def main():
             #output_file_handle.write(str(UCS()) + '\n')
             board_one.append(mancala_one) # player 1 with mancala at the end
             [mancala_two] + board_two     # player 2 with mancala in the beginning
-            #check(player_no,board_two,board_one)
             greedy(player_no,board_two,board_one)
-            print player_no
-            print cut_off_depth 
             for i in board_two:
                 print i,
             print
