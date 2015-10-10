@@ -9,6 +9,8 @@ board_two=""
 board_one=""
 mancala_two=""
 mancala_one=""
+final_one = ""
+final_two = ""
 
 
 
@@ -39,16 +41,12 @@ def read_board(file_handle):
 
                                         
 def greedy(player_no,board_two,board_one):
-                                    #global player_no
-                                    global board_two
-                                    global board_one
-                                    #board_two_dummy = list(board_two)
-                                    #board_one_dummy = list(board_one)
-
-                                    dummy_one = list(board_two)
+                                    global final_one
+                                    global final_two
+                                    
+                                    dummy_one = list(board_one)
                                     dummy_two = list(board_two)
-                                    mancala1 = dummy_one[len(dummy_one)-1]
-                                    mancala2 = dummy_two[0]
+                               
                                     
                                     if player_no == '1':
                                         for start in range(0,len(dummy_one)):
@@ -124,7 +122,8 @@ def main():
     global board_one
     global mancala_two
     global mancala_one
-    
+    global final_one
+    global final_two
     
     
     #InputFileName = str(sys.argv[2])
@@ -146,14 +145,14 @@ def main():
             board_one.append(mancala_one) # player 1 with mancala at the end
             [mancala_two] + board_two     # player 2 with mancala in the beginning
             greedy(player_no,board_two,board_one)
-            for i in board_two:
+            for i in final_one:
                 print i,
             print
-            for j in board_two:
+            for j in final_two:
                 print j,
             print
-            print board_two[0]
-            print board_one[len_one]                       
+            print final_two[0]
+            print final_one[len_one]                       
             
 
             
