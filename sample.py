@@ -22,7 +22,7 @@ def get_task(FileName):
 def read_board(file_handle):
                         global task
                         global player_no
-                        global cut_off_depth
+                        global cut_off_depth 
                         global board_two
                         global board_one
                         global mancala_two
