@@ -78,36 +78,35 @@ def greedy(player_no,board_two,board_one):
                                                             dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
                                                             dummy_one[start_from] = 0
                                                             dummy_two[start_from+1]= 0
-                                                            if (max_eval > dummy_one[len_one] - dummy_two[0]):
+                                                            if (max_eval < dummy_one[len_one] - dummy_two[0]):
                                                                     max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                    board_one = dummy_one
-                                                                    board_two = dummy_two
-                                                                    mancala1 = max_eval
-                                                                    mancala2 = dummy_two[0]
+                                                                    final_one = dummy_one
+                                                                    final_two = dummy_two
+                                                                    
                                                             
                                                             
                                                         else:
-                                                                board_one[start_from]+=1
+                                                                dummy_one[start_from]+= 1
                                                                 start_from++
                                                        
                                                     else: # more beads - so adding to player 2's board
                                                             start_from=0
                                                             if m!=0:
-                                                                board_one[start]-=1
-                                                                board_two[m]+=1
+                                                                dummy_one[start]-=1
+                                                                dummy_two[m]+=1
                                                                 m--
                                                                 if picked_value == 0:
-                                                                    if (max_eval > dummy_one[len_one] - dummy_two[0]):
+                                                                    if (max_eval < dummy_one[len_one] - dummy_two[0]):
                                                                         max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                        board_one = dummy_one
-                                                                        board_two = dummy_two
-                                                                        mancala1 = max_eval
-                                                                        mancala2 = dummy_two[0]
+                                                                        final_one = dummy_one
+                                                                        final_two = dummy_two
+
                                                             else:
-                                                                    board_one[start_from]+=1
+                                                                    dummy_one[start_from]+=1
                                                                     start_from++
                                             
-                                                    
+                                                   dummy_one = board_one
+                                                   dummy_two = board_two
                                         
                                     #Else if player 2 
                                             
@@ -139,7 +138,8 @@ def main():
     
 
     read_board(input_file_handle)
-
+    len_one = len(board_one)-1
+    len_two = len(board_two)-1
     if task == '1':
             #output_file_handle.write(str(UCS()) + '\n')
             board_one.append(mancala_one) # player 1 with mancala at the end
@@ -151,8 +151,8 @@ def main():
             for j in board_two:
                 print j,
             print
-            print mancala_two
-            print mancala_one                          
+            print board_two[0]
+            print board_one[len_one]                       
             
 
             
