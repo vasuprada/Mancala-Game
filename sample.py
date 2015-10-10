@@ -37,55 +37,63 @@ def read_board(file_handle):
                         mancala_two = file_handle.readline().rstrip('\n');
                         mancala_one = file_handle.readline().rstrip('\n');
 
-def check(player_no,board_two,board_one):
+'''def check(player_no,board_two,board_one):
     global player_no
     global board_two
     global board_one
     l = len(board_one)-1
     max_eval = board_one[l] - board_two[0]
     for start in range(0,len(board_one)):
-            greedy(start,player_no,board_two,board_one)
+            if board_one[start]== 0:
+                continue
             
-            
-                                            
-
-def greedy(start,player_no,board_two,board_one):
+            greedy(start,player_no,board_two,board_one)'''
+                                        
+def greedy(player_no,board_two,board_one):
                                     global player_no
                                     global board_two
                                     global board_one
                                    
                                     if player_no == '1':
-                                            if board_one[start] > 0:
-                                                j = start+1
-                                                k = len(board_one)-1
-                                                m = len(board_two)-1
-                                                while board_one[start]!=0:
-                                                    if j <= k:
-                                                        board_one[start]-=1
+                                            #if board_one[start] > 0:
+                                            for start in range(0,len(board_one)):
+                                                if board_one[start] == 0:
+                                                    continue
+                                                
+                                                picked_index = start
+                                                picked_value = board_one[start]
+                                                start_from = start+1       #j
+                                                len_one = len(board_one)-1 #k
+                                                m = len(board_two)-1 
+
+                                                while picked_value!=0:
+                                                    if start_from <= len_one:
+                                                        picked_value-=1
                                                         #condition 1- ENDS IN MANCALA-Free turn
-                                                        if (j == k) and ( board_one[start]== 0):
-                                                             board_one[j]+=1
+                                                        if (start_from == len_one) and (picked_value == 0):
+                                                             board_one[len_one]+=1
                                                              break
                                                         #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
-                                                        elif (board_one[start] == 0) and (board_one[j] == 0):
-                                                            board_one[j] = 0
+                                                        elif (picked_value == 0) and (board_one[start_from] == 0):
                                                             #mancala 1 will get beads from both player1 and opp pit
-                                                            board_one[k] = board_one[k] + board_two[j+1]
-                                                            board_two[j+1]=0
+                                                            board_one[start_from] = 1
+                                                            board_one[len_one] = board_one[len_one] + board_one[start_from]+ board_two[start_from+1]
+                                                            board_one[start_from] = 0
+                                                            board_two[start_from+1]= 0
+                                                            break
                                                         else:
-                                                                board_one[j]+=1
-                                                                j++
+                                                                board_one[start_from]+=1
+                                                                start_from++
                                                        
                                                     else: # more beads - so adding to player 2's board
-                                                            j=0
+                                                            start_from=0
                                                             if m!=0:
                                                                 board_one[start]-=1
                                                                 board_two[m]+=1
                                                                 m--
                                                             else:
-                                                                    
-                                                                    board_one[j]+=1
-                                                                    j++
+                                                                    board_one[start_from]+=1
+                                                                    start_from++
                                             
                                                     
                                         
@@ -124,8 +132,8 @@ def main():
             #output_file_handle.write(str(UCS()) + '\n')
             board_one.append(mancala_one) # player 1 with mancala at the end
             [mancala_two] + board_two     # player 2 with mancala in the beginning
-            check(player_no,board_two,board_one)
-            #greedy(player_no,board_two,board_one)
+            #check(player_no,board_two,board_one)
+            greedy(player_no,board_two,board_one)
             print player_no
             print cut_off_depth 
             for i in board_two:
