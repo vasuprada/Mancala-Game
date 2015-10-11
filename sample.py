@@ -133,14 +133,15 @@ def greedy(player_no,board_two,board_one):
                                                                                                    #dummy_one[start_from] += 1
                                                                                                    start_from = start + 1
                                             
-                                                       dummy_one = list(final_one)
-                                                       dummy_two = list(final_two)
+                                                       dummy_one = list(board_one)
+                                                       dummy_two = list(board_two)
                                                        for y in dummy_two:
                                                                   print y,
                                                        print
                                                        for x in dummy_one:
                                                                   print x,
                                                        print
+                                                       #start = 0
                                                     
                                         
                                     #Else if player 2 
