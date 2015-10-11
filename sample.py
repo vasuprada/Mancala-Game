@@ -11,7 +11,7 @@ mancala_two=""
 mancala_one=""
 final_one =""
 final_two =""
-
+max_eval=-1
 
 
            
@@ -40,7 +40,7 @@ def read_board(file_handle):
 def greedy(player_no,board_two,board_one):
                                  global final_one
                                  global final_two
-                                    
+                                 global max_eval  
                                  dummy_one = list(board_one)
                                  dummy_two = list(board_two)
 
@@ -52,9 +52,9 @@ def greedy(player_no,board_two,board_one):
                                  print
                                  print
                                  
-                                
+                                    
                                  if player_no == 1:
-                                            for start in range(0,len(dummy_one)):
+                                            for start in range(0,len(dummy_one)-1):
                                                        print 'start is',start
                                                        if dummy_one[start] == 0:
                                                            print 'start is:',start
@@ -70,8 +70,8 @@ def greedy(player_no,board_two,board_one):
                                                        print 'length of board 1:',len_one
                                                        m = len(dummy_two)-1
                                                        print 'length of board 2:',m
-                                                       max_eval = dummy_one[len_one] - dummy_two[0]
-                                                       print 'max_eval is:',max_eval
+                                                       #max_eval = dummy_one[len_one] - dummy_two[0]
+                                                       #print 'max_eval is:',max_eval
                                                        dummy_one[picked_index]= 0
 
                                                        while picked_value != 0:
@@ -96,6 +96,17 @@ def greedy(player_no,board_two,board_one):
                                                                                         dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
                                                                                         dummy_one[start_from] = 0
                                                                                         dummy_two[start_from+1]= 0
+                                                                                        for n in range(1,len(dummy_two)):
+                                                                                            dummy_two[0] += dummy_two[n]
+                                                                                        print '******************'
+                                                                                        for y in dummy_two:
+                                                                                              print y,
+                                                                                        print
+                                                                                        for x in dummy_one:
+                                                                                              print x,
+                                                                                        print
+                                                                                        print '******************'
+                                                                                        
                                                         
                                                                                         if (max_eval < (dummy_one[len_one] - dummy_two[0])):
                                                                                             max_eval = dummy_one[len_one] - dummy_two[0]
@@ -183,10 +194,10 @@ def main():
            board_one.append(mancala_one) # player 1 with mancala at the end
            board_two = [mancala_two] + board_two     # player 2 with mancala in the beginning
            greedy(player_no,board_two,board_one)
-           for i in final_one:
+           for i in final_two:
                       print i,
            print
-           for j in final_two:
+           for j in final_one:
                       print j,
            print
            print final_two[0]
