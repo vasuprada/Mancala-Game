@@ -90,20 +90,29 @@ def greedy(player_no,board_two,board_one):
                                                              
                                                                              #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
                                                                              elif (picked_value == 0) and (dummy_one[start_from] == 0):
-                                                                             #mancala 1 will get beads from both player1 and opp pit
+                                                                                        #mancala 1 will get beads from both player1 and opp pit
                                                                                         print 'AT CONDITION 2'
+                                                                                        flag = 0
+                                                                                        for u in range(0,len(dummy_one)-1):
+                                                                                            if dummy_one[u]!=0:
+                                                                                                flag = 1
+                                                                                                break
+                                                                                            
+                                                                                        
                                                                                         dummy_one[start_from] = 1
                                                                                         dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
                                                                                         dummy_one[start_from] = 0
                                                                                         dummy_two[start_from+1]= 0
-                                                                                        for n in range(1,len(dummy_two)):
-                                                                                            dummy_two[0] += dummy_two[n]
+                                                                                        if flag == 0:
+                                                                                            for n in range(1,len(dummy_two)):
+                                                                                                dummy_two[0] += dummy_two[n]
+                                                                                        
                                                                                         print '******************'
                                                                                         for y in dummy_two:
-                                                                                              print y,
+                                                                                                   print y,
                                                                                         print
                                                                                         for x in dummy_one:
-                                                                                              print x,
+                                                                                                   print x,
                                                                                         print
                                                                                         print '******************'
                                                                                         
@@ -122,17 +131,26 @@ def greedy(player_no,board_two,board_one):
                                                                   else: # more beads - so adding to player 2's board
                                                                              print 'IN PLAYER 2 side'
                                                                              if m!=0:
-                                                                                 #dummy_one[start] = 0
-                                                                                 print 'm is :',m
-                                                                                 dummy_two[m] += 1
-                                                                                 m -= 1
-                                                                                 print 'm is:',m
-                                                                                 print 'picked_value is',picked_value
-                                                                                 if picked_value == 0:
-                                                                                        if (max_eval < dummy_one[len_one] - dummy_two[0]):
-                                                                                                   max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                                                   final_one = list(dummy_one)
-                                                                                                   final_two = list(dummy_two)
+                                                                                        #dummy_one[start] = 0
+                                                                                        print 'm is :',m
+                                                                                        dummy_two[m] += 1
+                                                                                        m -= 1
+                                                                                        print 'm is:',m
+                                                                                        print 'picked_value is',picked_value
+                                                                                        flag1 = 0
+                                                                                        for u in range(0,len(dummy_one)-1):
+                                                                                                   if dummy_one[u]!=0:
+                                                                                                              flag1 = 1
+                                                                                                              break
+                                                                                        if picked_value == 0:
+                                                                                                   if flag1 == 0:
+                                                                                                              for n in range(1,len(dummy_two)):
+                                                                                                              dummy_two[0] += dummy_two[n]
+                                                                                        
+                                                                                                   if (max_eval < dummy_one[len_one] - dummy_two[0]):
+                                                                                                              max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                                                              final_one = list(dummy_one)
+                                                                                                              final_two = list(dummy_two)
                                                                                                    for y in final_two:
                                                                                                         print y,
                                                                                                    print
