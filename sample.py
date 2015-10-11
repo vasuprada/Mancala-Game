@@ -134,37 +134,40 @@ def greedy(player_no,board_two,board_one):
                                                        
                                                                   else: # more beads - so adding to player 2's board
                                                                              print 'IN PLAYER 2 side'
-                                                                             if m!=0:
-                                                                                        #dummy_one[start] = 0
-                                                                                        print 'm is :',m
-                                                                                        dummy_two[m] += 1
-                                                                                        m -= 1
-                                                                                        print 'm is:',m
-                                                                                        print 'picked_value is',picked_value
-                                                                                        flag1 = 0
-                                                                                        for u in range(0,len(dummy_one)-1):
-                                                                                                   if dummy_one[u]!=0:
-                                                                                                              flag1 = 1
-                                                                                                              break
-                                                                                        if picked_value == 0:
-                                                                                                   if flag1 == 0:
-                                                                                                              for n in range(1,len(dummy_two)):
-                                                                                                                  dummy_two[0] += dummy_two[n]
+                                                                             while(picked_value!= 0):
+                                                                                        if(m!=0):
+                                                                                                   #dummy_one[start] = 0
+                                                                                                   picked_value -= 1
+                                                                                                   print 'm is :',m
+                                                                                                   dummy_two[m] += 1
+                                                                                                   m -= 1
+                                                                                                   print 'm is:',m
+                                                                                                   print 'picked_value is',picked_value
                                                                                         
-                                                                                                   if (max_eval < dummy_one[len_one] - dummy_two[0]):
-                                                                                                              max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                                                              final_one = list(dummy_one)
-                                                                                                              final_two = list(dummy_two)
-                                                                                                   for y in final_two:
-                                                                                                        print y,
-                                                                                                   print
-                                                                                                   for x in final_one:
-                                                                                                        print x,
-                                                                                                   print
+                                                                             flag1 = 0
+                                                                             for u in range(0,len(dummy_one)-1):
+                                                                                        if dummy_one[u]!=0:
+                                                                                                   flag1 = 1
+                                                                                                   break
+                                                                             if picked_value == 0:
+                                                                                        if flag1 == 0:
+                                                                                                   for n in range(1,len(dummy_two)):
+                                                                                                              dummy_two[0] += dummy_two[n]
+                                                                            
+                                                                                        if (max_eval < dummy_one[len_one] - dummy_two[0]):
+                                                                                                   max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                                                   final_one = list(dummy_one)
+                                                                                                   final_two = list(dummy_two)
+                                                                                        for y in final_two:
+                                                                                                   print y,
+                                                                                        print
+                                                                                        for x in final_one:
+                                                                                                   print x,
+                                                                                        print
 
-                                                                                        else:
-                                                                                                   #dummy_one[start_from] += 1
-                                                                                                   start_from = start + 1
+                                                                             else:
+                                                                                       #dummy_one[start_from] += 1
+                                                                                       start_from = start + 1
                                             
                                                        dummy_one = list(board_one)
                                                        dummy_two = list(board_two)
