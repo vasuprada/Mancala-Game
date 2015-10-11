@@ -76,10 +76,10 @@ def greedy(player_no,board_two,board_one):
 
                                                        while picked_value != 0:
                                                                   print 'picked_value is:',picked_value              
-                                                                  picked_value -= 1
+                                                                  #picked_value -= 1
                                                                   print 'start_from is :',start_from
                                                                   if start_from <= len_one:
-                                                                             #picked_value -= 1
+                                                                             picked_value -= 1
                                                                              #condition 1- ENDS IN MANCALA-Free turn
                                                                              if (start_from == len_one) and (picked_value == 0):
                                                                                         dummy_one[len_one]+= 1
@@ -234,16 +234,18 @@ def main():
                greedy(player_no,board_two_p2,board_one_p1)
                len_one = len(board_one_p1)-1
                len_two = len(board_two_p2)-1
-               final_two = list(reversed(final_one))
-               final_one = list(reversed(final_two))
-               for i in final_two:
+               #final_two = list(reversed(final_one))
+               final_one_p1 = list(reversed(final_two))
+               final_two_p2 = list(reversed(final_one))
+               
+               for i in final_two_p2:
                     print i,
                print
-               for j in final_one:
+               for j in final_one_p1:
                     print j,
                print
-               print final_two[0]
-               print final_one[len_one]
+               print final_two_p2[0]
+               print final_one_p1[len_one]
                                 
             
 
