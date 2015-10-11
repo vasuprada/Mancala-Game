@@ -51,17 +51,17 @@ def greedy(player_no,board_two,board_one):
                                             print x,
                                  print
                                  print
-                                 print len(dummy_one) 
-                                 #start = 0
-                                 print 'start before player 1:',start
+                                 
+                                
                                  if player_no == 1:
                                             for start in range(0,len(dummy_one)):
-                                                       #print start
+                                                       print 'start is',start
                                                        if dummy_one[start] == 0:
-                                                       print 'start is:',start
-                                                       continue
+                                                           print 'start is:',start
+                                                           continue
                                                 
                                                        picked_index = start
+                                                       print 'picked index',picked_index
                                                        picked_value = dummy_one[picked_index]
                                                        print 'picked value:',picked_value
                                                        start_from = start+1 #j
@@ -75,12 +75,15 @@ def greedy(player_no,board_two,board_one):
                                                        dummy_one[picked_index]= 0
 
                                                        while picked_value != 0:
+                                                                  print 'picked_value is:',picked_value              
                                                                   picked_value -= 1
+                                                                  print 'start_from is :',start_from
                                                                   if start_from <= len_one:
                                                                              #picked_value -= 1
                                                                              #condition 1- ENDS IN MANCALA-Free turn
                                                                              if (start_from == len_one) and (picked_value == 0):
                                                                                         dummy_one[len_one]+= 1
+                                                                                        print 'AT CONDITION 1'
                                                                                         #greedy call
                                                                                         greedy(player_no,dummy_two,dummy_one)
                                                                                         break
@@ -88,40 +91,57 @@ def greedy(player_no,board_two,board_one):
                                                                              #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
                                                                              elif (picked_value == 0) and (dummy_one[start_from] == 0):
                                                                              #mancala 1 will get beads from both player1 and opp pit
+                                                                                        print 'AT CONDITION 2'
                                                                                         dummy_one[start_from] = 1
                                                                                         dummy_one[len_one] = dummy_one[len_one] + dummy_one[start_from]+ dummy_two[start_from+1]
                                                                                         dummy_one[start_from] = 0
                                                                                         dummy_two[start_from+1]= 0
                                                         
                                                                                         if (max_eval < (dummy_one[len_one] - dummy_two[0])):
-                                                                                        max_eval = dummy_one[len_one] - dummy_two[0]
-                                                                                        final_one = list(dummy_one)
-                                                                                        final_two = list(dummy_two)
+                                                                                            max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                                            final_one = list(dummy_one)
+                                                                                            final_two = list(dummy_two)
                                                     
                                                                              #conditon 3 - Just dropping beads one by one
                                                                              else:
+                                                                                        print 'AT CONDITION 3'
                                                                                         dummy_one[start_from] += 1
                                                                                         start_from += 1
                                                        
                                                                   else: # more beads - so adding to player 2's board
-                                                    
+                                                                             print 'IN PLAYER 2 side'
                                                                              if m!=0:
-                                                                             #dummy_one[start] = 0
-                                                                             dummy_two[m] += 1
-                                                                             m -= 1
-                                                                             print 'm is:',m
-                                                                             if picked_value == 0:
+                                                                                 #dummy_one[start] = 0
+                                                                                 print 'm is :',m
+                                                                                 dummy_two[m] += 1
+                                                                                 m -= 1
+                                                                                 print 'm is:',m
+                                                                                 print 'picked_value is',picked_value
+                                                                                 if picked_value == 0:
                                                                                         if (max_eval < dummy_one[len_one] - dummy_two[0]):
                                                                                                    max_eval = dummy_one[len_one] - dummy_two[0]
                                                                                                    final_one = list(dummy_one)
                                                                                                    final_two = list(dummy_two)
+                                                                                                   for y in final_two:
+                                                                                                        print y,
+                                                                                                   print
+                                                                                                   for x in final_one:
+                                                                                                        print x,
+                                                                                                   print
 
                                                                                         else:
                                                                                                    #dummy_one[start_from] += 1
                                                                                                    start_from = start + 1
                                             
-                                                       dummy_one = list(board_one)
-                                                       dummy_two = list(board_two)
+                                                       dummy_one = list(final_one)
+                                                       dummy_two = list(final_two)
+                                                       for y in dummy_two:
+                                                                  print y,
+                                                       print
+                                                       for x in dummy_one:
+                                                                  print x,
+                                                       print
+                                                    
                                         
                                     #Else if player 2 
                                             
