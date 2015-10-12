@@ -12,7 +12,7 @@ mancala_one=""
 final_one =""
 final_two =""
 max_eval=-1
-
+flagger = 0
 
            
 def read_board(file_handle):
@@ -40,7 +40,8 @@ def read_board(file_handle):
 def greedy(player_no,board_two,board_one):
                                  global final_one
                                  global final_two
-                                 global max_eval  
+                                 global max_eval
+                                 global flagger
                                  dummy_one = list(board_one)
                                  dummy_two = list(board_two)
 
@@ -153,11 +154,17 @@ def greedy(player_no,board_two,board_one):
                                                                                         if flag1 == 0:
                                                                                                    for n in range(1,len(dummy_two)):
                                                                                                               dummy_two[0] += dummy_two[n]
-                                                                            
-                                                                                        if (max_eval < dummy_one[len_one] - dummy_two[0]):
+                                                                                        if flagger == 1:
+                                                                                            if (max_eval <= dummy_one[len_one] - dummy_two[0]):
                                                                                                    max_eval = dummy_one[len_one] - dummy_two[0]
                                                                                                    final_one = list(dummy_one)
                                                                                                    final_two = list(dummy_two)
+                                                                                        else:
+                                                                                            
+                                                                                            if (max_eval < dummy_one[len_one] - dummy_two[0]):
+                                                                                                    max_eval = dummy_one[len_one] - dummy_two[0]
+                                                                                                    final_one = list(dummy_one)
+                                                                                                    final_two = list(dummy_two)
                                                                                         for y in final_two:
                                                                                                    print y,
                                                                                         print
@@ -197,7 +204,7 @@ def main():
     global mancala_one
     global final_one
     global final_two
-    
+    global flagger
     
     #InputFileName = str(sys.argv[2])
     InputFileName = "input_1.txt"
@@ -220,17 +227,18 @@ def main():
                greedy(player_no,board_two,board_one)
                len_one = len(board_one)-1
                len_two = len(board_two)-1
-               for i in final_two:
-                    print i,
+               for i in range(1,len_two+1):
+                    print final_two[i],
                print
-               for j in final_one:
-                    print j,
+               for j in range(0,len_one):
+                    print final_one[j],
                print
                print final_two[0]
                print final_one[len_one]
            else:
                board_two_p2 = list(reversed(board_one))
                board_one_p1 = list(reversed(board_two))
+               flagger = 1
                greedy(player_no,board_two_p2,board_one_p1)
                len_one = len(board_one_p1)-1
                len_two = len(board_two_p2)-1
@@ -238,11 +246,11 @@ def main():
                final_one_p1 = list(reversed(final_two))
                final_two_p2 = list(reversed(final_one))
                
-               for i in final_two_p2:
-                    print i,
+               for i in range(1,len_two+1):
+                    print final_two_p2[i],
                print
-               for j in final_one_p1:
-                    print j,
+               for j in range(0,len_one):
+                    print final_one_p1[j],
                print
                print final_two_p2[0]
                print final_one_p1[len_one]
