@@ -115,6 +115,8 @@ def greedy(player_no,board_two,board_one):
                                                                                         if flag == 0:
                                                                                             for n in range(1,len(dummy_two)):
                                                                                                 dummy_two[0] += dummy_two[n]
+                                                                                                if(dummy_two[n]!=0):
+                                                                                                    dummy_two[n]=0
                                                                                                 
                                                                                                 
                                                                                         if flag2 == 0:
@@ -169,6 +171,9 @@ def greedy(player_no,board_two,board_one):
                                                                                         if flag1 == 0:
                                                                                                    for n in range(1,len(dummy_two)):
                                                                                                               dummy_two[0] += dummy_two[n]
+                                                                                                              if dummy_two[n]!=0:
+                                                                                                                  dummy_two[n]=0
+                                                                                                                
                                                                                         if flagger == 1:
                                                                                             if (max_eval <= dummy_one[len_one] - dummy_two[0]):
                                                                                                    max_eval = dummy_one[len_one] - dummy_two[0]
