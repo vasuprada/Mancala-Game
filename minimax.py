@@ -123,7 +123,8 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value):
                                                                                         if flag == 0:
                                                                                             for n in range(1,len(dummy_two)):
                                                                                                 dummy_two[0] += dummy_two[n]
-                                                                                                
+                                                                                                if(dummy_two[n]!=0):
+                                                                                                    dummy_two[n]=0
                                                                                                 
                                                                                         if flag2 == 0:
                                                                                             for v in range(0,len(dummy_one)-1):
@@ -181,7 +182,8 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value):
                                                                                         if flag1 == 0:
                                                                                                  for n in range(1,len(dummy_two)):
                                                                                                             dummy_two[0] += dummy_two[n]
-                                                                                        
+                                                                                                            if(dummy_two[n]!=0):
+                                                                                                                dummy_two[n]=0
                                                                                         if (max_eval < dummy_one[len_one] - dummy_two[0]):
                                                                                                 max_eval = dummy_one[len_one] - dummy_two[0]
                                                                                                 final_one = list(dummy_one)
@@ -198,7 +200,7 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value):
                                                                                     call_min(player_no,depth,cut_off_depth,dummy_two,dummy_one)
 
                                                                              else:
-                                                                                       #dummy_one[start_from] += 1
+                                                                                       #Rotation Problem
                                                                                        start_from = start + 1
                                             
                                                        dummy_one = list(board_one)
@@ -267,40 +269,43 @@ def call_min(player_no,depth,cut_off_depth,board_two,board_one,value):
                                                                                         #Depth remains same on free turn
                                                                                         call_min(player_no,depth,cut_off_depth,dummy_two,dummy_one)
                                                                                         break
-																			 #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
-																		    elif (picked_value == 0) and (dummy_two[start_from] == 0):                                                                                 
+									     #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
+									     elif (picked_value == 0) and (dummy_two[start_from] == 0):                                                                                 
                                                                                         #mancala 2 will get beads from both player2 and opp pit
                                                                                         print 'AT CONDITION 2'
                                                                                         
-																						flag = 0
+											flag = 0											flag = 0
                                                                                         flag2 = 0                                                                                      
                                                                                         dummy_two[start_from] = 1
                                                                                         dummy_two[0] += dummy_two[start_from]+ dummy_one[start_from-1]
                                                                                         dummy_two[start_from] = 0
                                                                                         dummy_one[start_from-1]= 0
-																						#To check if Everything in board two is zero - then empty board 1
-																						for u in range(1,len(dummy_two)):
+											# If Board two becomes empty											#To check if Everything in board two is zero - then empty board 1
+											for u in range(1,len(dummy_two)):
                                                                                             if dummy_two[u]!=0:
                                                                                                 flag = 1
                                                                                                 break
-                                                                                        #To check if Everything in Board 1 is zero - then empty board 2
-																						for v in range(0,len_one):
-																							if dummy_one[v]!=0
-																								flag2 = 1
-																								break
-																						
-                                                                                        #Empty board 1
-																						if flag == 0:
-                                                                                            for n in range(0,len(dummy_one)-1):
+                                                                                        # If Board one becomes empty                                                                                            
+                                                                                        for x in range(0,len(dummy_one)-1):
+                                                                                                if dummy_one[x]!=0:
+                                                                                                    flag2 = 1
+                                                                                                    break
+                                                                                        #Empty Board One    
+                                                                                        if flag == 0:
+                                                                                            for n in range(0,len_one):
                                                                                                 dummy_one[len_one] += dummy_one[n]
-																						#Empty Board 2
-																						if flag2 == 0 :
-																							for x in range(1,len(dummy_two)):
-																								dummy_two[0]+= dummy_two[x]
-																								
-																							
-																							
+                                                                                                if(dummy_one[n]!=0):
+                                                                                                    dummy_one[n]=0
+                                                                                                
+                                                                                        #Empty Board Two       
+                                                                                        if flag2 == 0:
+                                                                                            for v in range(1,len(dummy_two):
+                                                                                                dummy_two[0] +=dummy_two[v]
+                                                                                                if(dummy_two[v]!=0):
+                                                                                                    dummy_two[v]=0										for u in range(1,len(dummy_two)):
+                                                                                            
                                                                                         
+
                                                                                         print '******************'
                                                                                         for y in dummy_two:
                                                                                                    print y,
@@ -351,6 +356,9 @@ def call_min(player_no,depth,cut_off_depth,board_two,board_one,value):
                                                                                         if flag1 == 0:
                                                                                                    for n in range(0,len_one):
                                                                                                               dummy_one[len_one] += dummy_one[n]
+                                                                                                              if dummy_one[n]!=0:
+                                                                                                                 dummy_one[n]=0
+                                                                                                           
                                                                                         
                                                                                         if (max_eval < dummy_one[len_one] - dummy_two[0]):
                                                                                                     max_eval = dummy_one[len_one] - dummy_two[0]
@@ -368,7 +376,8 @@ def call_min(player_no,depth,cut_off_depth,board_two,board_one,value):
                                                                                     call_max(player_no,depth,cut_off_depth,dummy_two,dummy_one)
 
                                                                              else:
-                                                                                       #dummy_one[start_from] += 1
+                                                                                       #Rotation Problem
+                                                                            
                                                                                        start_from = len_one
                                                                                                              
                                                        dummy_one = list(board_one)
@@ -421,7 +430,7 @@ def main():
     
     # MINIMAX ALGORITHM           
     #elif task ==2:
-    if task == 2:
+    if task == 2: 
             value = -9999
             depth = 0
             call_max(player_no,depth,cut_off_depth,board_two,board_one,value)
