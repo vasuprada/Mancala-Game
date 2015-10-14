@@ -122,12 +122,13 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                                     dummy_two[0] += dummy_two[n]
                                     if(dummy_two[n]!=0):
                                         dummy_two[n]=0
-                                                                                                
+                                                                                            
                             if flag2 == 0:
                                 for v in range(0,len(dummy_one)-1):
                                     dummy_one[len_one] +=dummy_one[v]
                                     if(dummy_one[v]!=0):
                                         dummy_one[v]=0
+                            
                             
                             print 'flag 2 and flag',flag2,flag
                             print '******************'
@@ -140,10 +141,7 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             print
                             print '******************'
                             # Either or Both Boards Became empty
-                            if (flag2 == 0 or flag == 0):
-                                final_one = list(dummy_one)
-                                final_two = list(dummy_two)
-                                break
+                            
                             
                             #Now have to call max again
                             #Depth remains same on free turn and state is MAX:1
@@ -151,29 +149,46 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             #set mystate and print -inf or inf
                             #print Ax By based on start and level
                             if(player_no == 1):
-                                if value == -9999:
+                                if state == 1 and depth == 0:
                                     value1 = '-Infinity'
-                                print 'B'+ str(dummy_one[pos_arr[start]]),depth,value1
+                                print 'B'+ str(start+2),depth,value1
                             else: #PLayer 2
-                                if value == -9999:
+                                if state == 1 and depth == 0:
                                     value1 = '-Infinity'
-                                print 'A'+ str(dummy_one[pos_arr[start]]),depth,value1
+                                print 'A'+ str(start+2),depth,value1
                             
-                            call_max(player_no,depth,cut_off_depth,dummy_two,dummy_one,value,state)
-                                #break
-                                #compare based on mystate and assign value 
-                                
-                                #print Ax By, level, value
-                                #return that value
-                                state = 0 #Change to Min
+                          
+                            #Current eval
+                            value = dummy_one[len_one] - dummy_two[0]
+                            
+                            #Game ended, no further call; return value of current eval
+                            if (flag2 == 0 or flag == 0):
                                 if(player_no == 1):
-                                    if value == -9999:
-                                        value1 = 'Infinity'
-                                        print 'B'+ str(dummy_one[pos_arr[start]]),depth,value1
+                                    print 'B'+ str(start+2),depth,value
                                 else: #PLayer 2
-                                    if value == -9999:
-                                        value1 = '-Infinity'
-                                        print 'A'+ str(dummy_one[pos_arr[start]]),depth,value
+                                    print 'A'+ str(start+2),depth,value
+                                
+                                
+                                if (max_eval < value):
+                                    max_eval = value
+                                    final_one = list(dummy_one)
+                                    final_two = list(dummy_two)
+                                    
+                                return value
+                            
+                            ret_val = call_max(player_no,depth,cut_off_depth,dummy_two,dummy_one,value,state)
+                    
+                            #compare based on mystate and assign value
+                            if (state == 1):
+                                temp = max(ret_val,value)
+                            else:
+                                temp = min(ret_val,value)
+                            
+                            if(player_no == 1):
+                                print 'B'+ str(start+2),depth,temp
+                            else: #PLayer 2
+                                print 'A'+ str(start+2),depth,temp
+                            
                                
                                 
                         #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
@@ -220,39 +235,72 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             print
                             print '******************'
                                                                                         
-                                                        
-                            if (max_eval < (dummy_one[len_one] - dummy_two[0])):
-                                    max_eval = dummy_one[len_one] - dummy_two[0]
-                                        final_one = list(dummy_one)
-                                        final_two = list(dummy_two)
-                            value = max_eval
-                            # have to call max as player 2 now (Game ended for Player 1)
-                            #depth increases
-                            depth = depth+1
-                            #check player_no and change paramter for next call 
-                            #DOUBT HERE#
+                            if(player_no == 1):
+                                if state == 0 and depth <= 1:
+                                    value1 = 'Infinity'
+                                print 'B'+ str(start+2),depth,value1
+                            else: #PLayer 2
+                                if state == 0 and depth <= 1:
+                                    value1 = 'Infinity'
+                                print 'A'+ str(start+2),depth,value1
+                            
+                            value = dummy_one[len_one] - dummy_two[0]    
+                            
+                            #Change player and call
                             if(player_no == 1):
                                 player_no = 2
-                                call_max(player_no,depth,cut_off_depth,dummy_two,dummy_one,state,value)
-                            else: # Player 2
-                                dummy_rev_b1 = list(reversed(dummy_two))
-                                dummy_rev_b2 = list(reversed(dummy_one))
-                                call_max(player_no,depth,cut_off_depth,dummy_rev_b2,dummy_rev_b1,state,value)
+                            
+                            else:
+                                player_no = 1
+                            
+                            dummy_rev_b1 = list(reversed(dummy_two))
+                            dummy_rev_b2 = list(reversed(dummy_one))
+                            
+                            if(state == 0):
+                                ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_rev_b2,dummy_rev_b1,1,value)
+                            else:
+                                ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_rev_b2,dummy_rev_b1,0,value)
                                 
                             #check returned value and print the 3 things
-                            state = 1 #Change to Max now
+                            if (state == 1):
+                                temp = max(ret_val,value)
+                            else:
+                                temp = min(ret_val,value)
+                                
                             if(player_no == 1):
-                                print 'B'+ str(dummy_one[pos_arr[start]]),depth,value
+                                print 'B'+ str(start+2),depth,temp
                             else: #PLayer 2
-                                print 'A'+ str(dummy_one[pos_arr[start]]),depth,value
+                                print 'A'+ str(start+2),depth,temp
                             
-                            #Change board states back to how they were
-                            dummy_one = list(reversed(dummy_two)
-                            dummy_two = list(reversed(dummy_one)
-                                                                                    
-
+                            
                         elif ((picked_value == 0) and (start_from < len_one)):
-                            break
+                            if(player_no == 1):
+                                print 'B'+ str(start+2),depth,value
+                            else: #PLayer 2
+                                print 'A'+ str(start+2),depth,value
+                            #break
+                            if(player_no == 1):
+                                player_no = 2
+                            else:
+                                player_no = 1
+                                
+                            if(state == 0):
+                                ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,1,value)
+                            else:
+                                ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,0,value)
+                                
+                            #check returned value and print the 3 things
+                            if (state == 1):
+                                temp = max(ret_val,value)
+                            else:
+                                temp = min(ret_val,value)
+                                
+                            if(player_no == 1):
+                                print 'B'+ str(start+2),depth,temp
+                            else: #PLayer 2
+                                print 'A'+ str(start+2),depth,temp
+                            
+                            
                                                                                 
                         #conditon 3 - Just dropping beads one by one
                         else:
@@ -295,17 +343,33 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                                     if(dummy_two[n]!=0):
                                         dummy_two[n]=0
                                     
-                            if flagger == 1:
+                            '''if flagger == 1:
                                 if (max_eval <= dummy_one[len_one] - dummy_two[0]):
                                     max_eval = dummy_one[len_one] - dummy_two[0]
                                     final_one = list(dummy_one)
                                     final_two = list(dummy_two)
                             else:
-                                                                                            
-                                if (max_eval < dummy_one[len_one] - dummy_two[0]):
-                                    max_eval = dummy_one[len_one] - dummy_two[0]
-                                    final_one = list(dummy_one)
-                                    final_two = list(dummy_two)
+                            '''
+                            
+                            
+                            if(player_no == 1):
+                                print 'B'+ str(start+2),depth,value
+                            else: #PLayer 2
+                                print 'A'+ str(start+2),depth,value
+                            #break
+                            if(player_no == 1):
+                                player_no = 2
+                            else:
+                                player_no = 1
+                            
+                            value = dummy_one[len_one] - dummy_two[0]
+                            
+                                
+                            if(state == 0):
+                                ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,1,value)
+                            else:
+                                ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,0,value)    
+                            
                             
                             for y in final_two:
                                 print y,
@@ -314,10 +378,16 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                                 print x,
                             print
                             
-                            # have to call MIN now(Game ended)- MIN NODE shud play now
-                            #depth increases
-                            depth = depth+1
-                            call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,state,value)
+                            if (state == 1):
+                                temp = max(ret_val,value)
+                            else:
+                                temp = min(ret_val,value)
+                                
+                            if(player_no == 1):
+                                print 'B'+ str(start+2),depth,temp
+                            else: #PLayer 2
+                                print 'A'+ str(start+2),depth,temp
+                            
 
                             print 'Last start from is : ',start_from
                             print 'Last picked value',picked_value                                                                             
