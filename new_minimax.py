@@ -109,13 +109,13 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             
                             for u in range(0,len(dummy_one)-1):
                                 if dummy_one[u]!=0:
-                                flag = 1
-                                break
+                                    flag = 1
+                                    break
                                                                                                                                                                                     
                             for x in range(1,len(dummy_two)):
                                 if dummy_two[x]!=0:
-                                flag2 = 1
-                                break
+                                    flag2 = 1
+                                    break
                                                                                             
                             if flag == 0:
                                 for n in range(1,len(dummy_two)):
