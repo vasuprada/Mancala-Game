@@ -317,7 +317,7 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             # have to call MIN now(Game ended)- MIN NODE shud play now
                             #depth increases
                             depth = depth+1
-                            call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one)
+                            call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,state,value)
 
                             print 'Last start from is : ',start_from
                             print 'Last picked value',picked_value                                                                             
@@ -373,7 +373,9 @@ def main():
             print 'Cut off depth is',cut_off_depth 
             print "Node,Depth,Value"
             print "root,0,-Infinity"
-            call_max(player_no,depth,cut_off_depth,board_two,board_one,state,value)
+            ret_val = call_max(player_no,depth,cut_off_depth,board_two,board_one,state,value)
+            print 'return value is:',ret_val
+            print 'root,0,' + str(ret_val)
             len_one = len(board_one)-1
             len_two = len(board_two)-1
             for i in range(1,len_two+1):
@@ -393,7 +395,9 @@ def main():
             board_two_p2 = list(reversed(board_one))
             board_one_p1 = list(reversed(board_two))
             flagger = 1
-            call_max(player_no,depth,cut_off_depth,board_two_p2,board_one_p1,state,value)
+            ret_val = call_max(player_no,depth,cut_off_depth,board_two_p2,board_one_p1,state,value)
+            print 'return value is:',ret_val
+            print 'root,0,' + str(ret_val)
             len_one = len(board_one_p1)-1
             len_two = len(board_two_p2)-1
                
