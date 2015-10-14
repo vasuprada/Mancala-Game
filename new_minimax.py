@@ -360,6 +360,9 @@ def main():
     #print task
     board_one.append(mancala_one) # player 1 with mancala at the end
     board_two = [mancala_two] + board_two     # player 2 with mancala in the beginning
+    print 'position array is'
+    for i in range(2,12):
+        print pos_arr[i],
     
     # MINIMAX ALGORITHM           
     #elif task ==2:
