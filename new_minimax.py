@@ -42,39 +42,39 @@ def read_board(file_handle):
 
 
 def call_max(player_no,depth,cut_off_depth,board_two,board_one):
-
-     if(depth>cut_off_depth):
-         return -9876
-     # MAX NODE : 1 MIN NODE : 0  
-     state = 1 
+    global final_one
+    global final_two
+    global max_eval
+    global flagger
+    global pos_arr
+    if(depth>cut_off_depth):
+        return -9876
+    # MAX NODE : 1 MIN NODE : 0  
+    state = 1 
      
-     global final_one
-     global final_two
-     global max_eval
-     global flagger
-     global pos_arr
      
-     dummy_one = list(board_one)
-     dummy_two = list(board_two)
+     
+    dummy_one = list(board_one)
+    dummy_two = list(board_two)
 
-     for y in dummy_two:
-                print y,
-     print
-     for x in dummy_one:
-                print x,
-     print
-     print
+    for y in dummy_two:
+        print y,
+    print
+    for x in dummy_one:
+        print x,
+    print
+    print
      
     # It has to switch between player 1 and player 2 till depth becomes equal to cutoffdepth
     while(depth != cut_off_depth):
         
         #if(player_no == 1): -- Required?
-                        
-             for start in range(0,len(dummy_one)-1):
-                                                       print 'start is',start
-                                                       if dummy_one[start] == 0:
-                                                           print 'start is:',start
-                                                           continue
+            # MAX NODE STARTING
+            for start in range(0,len(dummy_one)-1):
+                print 'start is',start
+                if dummy_one[start] == 0:
+                print 'start is:',start
+                continue
                                                        
                                                        picked_index = start
                                                        print 'picked index',picked_index
