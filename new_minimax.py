@@ -43,12 +43,16 @@ def read_board(file_handle):
 
 def call_max(player_no,depth,cut_off_depth,board_two,board_one):
 
-    #depth check and return -2918
-    #local mystate variable
+     if(depth>cut_off_depth):
+         return -9876
+     # MAX NODE : 1 MIN NODE : 0  
+     state = 1 
+     
      global final_one
      global final_two
      global max_eval
-     #global flagger
+     global flagger
+     global pos_arr
      
      dummy_one = list(board_one)
      dummy_two = list(board_two)
@@ -63,10 +67,9 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one):
      
     # It has to switch between player 1 and player 2 till depth becomes equal to cutoffdepth
     while(depth != cut_off_depth):
-        #print root,0,-infinity (starts from root)
-        if(player_no == 1):
-             #reducing depth by 1 for each player's turn(Starting from 1)
-             
+        
+        #if(player_no == 1): -- Required?
+                        
              for start in range(0,len(dummy_one)-1):
                                                        print 'start is',start
                                                        if dummy_one[start] == 0:
@@ -98,6 +101,45 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one):
                                                                              if (start_from == len_one) and (picked_value == 0):
                                                                                         dummy_one[len_one]+= 1
                                                                                         print 'AT CONDITION 1'
+                                                                                        flag = 0
+                                                                                        flag2 = 0
+                                                                                        for u in range(0,len(dummy_one)-1):
+                                                                                            if dummy_one[u]!=0:
+                                                                                                flag = 1
+                                                                                                break
+                                                                                                                                                                                    
+                                                                                        for x in range(1,len(dummy_two)):
+                                                                                                if dummy_two[x]!=0:
+                                                                                                    flag2 = 1
+                                                                                                    break
+                                                                                            
+                                                                                        if flag == 0:
+                                                                                            for n in range(1,len(dummy_two)):
+                                                                                                dummy_two[0] += dummy_two[n]
+                                                                                                if(dummy_two[n]!=0):
+                                                                                                    dummy_two[n]=0
+                                                                                                
+                                                                                                
+                                                                                        if flag2 == 0:
+                                                                                            for v in range(0,len(dummy_one)-1):
+                                                                                                dummy_one[len_one] +=dummy_one[v]
+                                                                                                if(dummy_one[v]!=0):
+                                                                                                    dummy_one[v]=0
+                                                                                        print 'flag 2 and flag',flag2,flag
+
+                                                                                        print '******************'
+                                                                                        for y in dummy_two:
+                                                                                                   print y,
+                                                                                        print
+                                                                                        for x in dummy_one:
+                                                                                                   print x,
+                                                                                        print
+                                                                                        print '******************'
+
+                                                                                        if (flag2 == 0 or flag == 0):
+                                                                                            final_one = list(dummy_one)
+                                                                                            final_two = list(dummy_two)
+                                                                                            break
                                                                                         #Now have to call max again
                                                                                         #Depth remains same on free turn
 
@@ -275,8 +317,10 @@ def main():
     #elif task ==2:
     if task == 2:
         if player_no==1:
-            value = -9999
-            depth = 0
+            value = -9999 #-infinity
+            depth = 1
+            print "Node,Depth,Value"
+            print "root,0,-Infinity"
             call_max(player_no,depth,cut_off_depth,board_two,board_one,value)
             len_one = len(board_one)-1
             len_two = len(board_two)-1
