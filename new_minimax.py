@@ -370,6 +370,7 @@ def main():
         if player_no==1:
             value = -9999 #-infinity
             depth = 1
+            print 'Cut off depth is',cut_off_depth 
             print "Node,Depth,Value"
             print "root,0,-Infinity"
             call_max(player_no,depth,cut_off_depth,board_two,board_one,state,value)
@@ -386,6 +387,7 @@ def main():
         else:
             value = -9999 #-infinity
             depth = 1
+            print 'Cut off depth is',cut_off_depth 
             print "Node,Depth,Value"
             print "root,0,-Infinity"
             board_two_p2 = list(reversed(board_one))
