@@ -13,11 +13,9 @@ final_one =""
 final_two =""
 max_eval=-1
 flagger = 0
-pos_arr = ""
-state = 1
-for i in range(2,12):
-    pos_arr.append(i)
-           
+
+#state = 1
+
 def read_board(file_handle):
                       global task
                       global player_no
@@ -42,12 +40,17 @@ def read_board(file_handle):
                                         
 
 
-def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
+def call_max(player_no,depth,cut_off_depth,board_two,board_one,state,value):
     global final_one
     global final_two
     global max_eval
     global flagger
     global pos_arr
+
+    print 'the current depth is :',depth
+    print 'the current value is:',value
+    print 'the current state is:',state
+    
     if(depth>cut_off_depth):
         return -9876
     # MAX NODE : 1 MIN NODE : 0  
@@ -64,17 +67,15 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
     print
      
     # It has to switch between player 1 and player 2 till depth becomes equal to cutoffdepth
-    while(depth != cut_off_depth):
-        
-        #if(player_no == 1): -- Required?
-            # MAX NODE STARTING
-            for start in range(0,len(dummy_one)-1):
+    #while(depth != cut_off_depth):
+
+    for start in range(0,len(dummy_one)-1):
                 
                 print 'start is',start
                 
                 if dummy_one[start] == 0:
-                print 'start is:',start
-                continue
+                    print 'start is:',start
+                    continue
                                                        
                 picked_index = start
                 print 'picked index',picked_index
@@ -150,12 +151,12 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             #print Ax By based on start and level
                             if(player_no == 1):
                                 if state == 1 and depth == 0:
-                                    value1 = '-Infinity'
-                                print 'B'+ str(start+2),depth,value1
+                                    value = "-Infinity"
+                                print 'B'+ str(start+2),depth,value
                             else: #PLayer 2
                                 if state == 1 and depth == 0:
-                                    value1 = '-Infinity'
-                                print 'A'+ str(start+2),depth,value1
+                                    value = "-Infinity"
+                                print 'A'+ str(start+2),depth,value
                             
                           
                             #Current eval
@@ -168,7 +169,7 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                                 else: #PLayer 2
                                     print 'A'+ str(start+2),depth,value
                                 
-                                
+                        
                                 if (max_eval < value):
                                     max_eval = value
                                     final_one = list(dummy_one)
@@ -237,12 +238,12 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                                                                                         
                             if(player_no == 1):
                                 if state == 0 and depth <= 1:
-                                    value1 = 'Infinity'
-                                print 'B'+ str(start+2),depth,value1
+                                    value = 'Infinity'
+                                print 'B'+ str(start+2),depth,value
                             else: #PLayer 2
                                 if state == 0 and depth <= 1:
-                                    value1 = 'Infinity'
-                                print 'A'+ str(start+2),depth,value1
+                                    value = 'Infinity'
+                                print 'A'+ str(start+2),depth,value
                             
                             value = dummy_one[len_one] - dummy_two[0]    
                             
@@ -260,6 +261,8 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                                 ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_rev_b2,dummy_rev_b1,1,value)
                             else:
                                 ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_rev_b2,dummy_rev_b1,0,value)
+
+                            #Should Reverse back 
                                 
                             #check returned value and print the 3 things
                             if (state == 1):
@@ -274,17 +277,30 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                             
                             
                         elif ((picked_value == 0) and (start_from < len_one)):
+                            dummy_one[start_from] += 1
+                            start_from += 1
+                            #Game ended for player 1 here - Change state
+                            state = 0
                             if(player_no == 1):
+                                if(depth == 1 and state == 0):
+                                    state = 1
+                                    value = "Infinity"
                                 print 'B'+ str(start+2),depth,value
-                            else: #PLayer 2
+                                
+                        
+                            else:#PLayer 2
+                                if(depth == 1 and state == 0):
+                                    state = 1
+                                    value = "Infinity"
                                 print 'A'+ str(start+2),depth,value
+                                
                             #break
                             if(player_no == 1):
                                 player_no = 2
                             else:
                                 player_no = 1
                                 
-                            if(state == 0):
+                            if(state == 1):
                                 ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,1,value)
                             else:
                                 ret_val = call_max(player_no,depth+1,cut_off_depth,dummy_two,dummy_one,0,value)
@@ -306,7 +322,16 @@ def call_max(player_no,depth,cut_off_depth,board_two,board_one,value,state):
                         else:
                             print 'AT CONDITION 3'
                             dummy_one[start_from] += 1
+                            
                             start_from += 1
+                            for y in dummy_two:
+                                print y,
+                            print
+                            for x in dummy_one:
+                                print x,
+                            print
+                            print
+                            
                                                        
                     else: # more beads - so adding to player 2's board
                         print 'In MIN board side'
@@ -413,8 +438,8 @@ def main():
     global final_one
     global final_two
     global flagger
-    global state
-    
+    #global state
+  
     #InputFileName = str(sys.argv[2])
     InputFileName = "input_1.txt"
     OutputFileName = "output.txt"
@@ -430,20 +455,20 @@ def main():
     #print task
     board_one.append(mancala_one) # player 1 with mancala at the end
     board_two = [mancala_two] + board_two     # player 2 with mancala in the beginning
-    print 'position array is'
-    for i in range(2,12):
-        print pos_arr[i],
+    
     
     # MINIMAX ALGORITHM           
     #elif task ==2:
     if task == 2:
         if player_no==1:
             value = -9999 #-infinity
-            depth = 1
+            depth = 0
+            state = 1
             print 'Cut off depth is',cut_off_depth 
             print "Node,Depth,Value"
             print "root,0,-Infinity"
-            ret_val = call_max(player_no,depth,cut_off_depth,board_two,board_one,state,value)
+            print 'the value before first call',value
+            ret_val = call_max(player_no,depth+1,cut_off_depth,board_two,board_one,state,value)
             print 'return value is:',ret_val
             print 'root,0,' + str(ret_val)
             len_one = len(board_one)-1
@@ -458,14 +483,14 @@ def main():
             print final_one[len_one]
         else:
             value = -9999 #-infinity
-            depth = 1
+            depth = 0
             print 'Cut off depth is',cut_off_depth 
             print "Node,Depth,Value"
             print "root,0,-Infinity"
             board_two_p2 = list(reversed(board_one))
             board_one_p1 = list(reversed(board_two))
             flagger = 1
-            ret_val = call_max(player_no,depth,cut_off_depth,board_two_p2,board_one_p1,state,value)
+            ret_val = call_max(player_no,depth+1,cut_off_depth,board_two_p2,board_one_p1,state,value)
             print 'return value is:',ret_val
             print 'root,0,' + str(ret_val)
             len_one = len(board_one_p1)-1
