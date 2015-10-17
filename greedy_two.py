@@ -239,22 +239,18 @@ def greedy(player_no,board,len_one):
                 start_from = start+1 #j
                 print 'starting from:',start_from
                 #len_one = len(dummy_one)-1 #k
-                #print 'length of board 1:',len_one
+                print 'length of board 2:',len_one
                 m = len(dummy)-1
-                #print 'length of board 2:',m
-                #max_eval = dummy_one[len_one] - dummy_two[0]
-                #print 'max_eval is:',max_eval
-                #dummy_one[picked_index]= 0
                 dummy[picked_index] = 0
 
                 while picked_value != 0:
                         print 'picked_value is:',picked_value              
                         print 'Outside start_from is :',start_from
                          
-                        if start_from <= len_one:
+                        if start_from <= m:
                                 picked_value -= 1
                                 #condition 1- ENDS IN MANCALA-Free turn
-                                if (start_from == len_one) and (picked_value == 0):
+                                if (start_from == len_one+2) and (picked_value == 0):
                                         dummy[len_one]+= 1
                                         print 'AT CONDITION 1'
                                         flag = 0
@@ -272,7 +268,7 @@ def greedy(player_no,board,len_one):
                                                                                                         
                                         if flag == 0:
                                                 for n in range(len_one+2,len(dummy)):
-                                                        dummy_two[len_one+1] += dummy_two[n]
+                                                        dummy[len_one+1] += dummy[n]
                                                         if(dummy[n]!=0):
                                                                 dummy[n]=0
                                                                                                             
@@ -307,9 +303,9 @@ def greedy(player_no,board,len_one):
                                         flag = 0
                                         flag2 = 0
                                         dummy[start_from] = 1
-                                        x = start_from + len_one + 2
+                                        x = start_from - len_one - 2
                                         #print x
-                                        dummy[len_one] = dummy[len_one] + dummy[start_from]+ dummy[x]
+                                        dummy[len_one + 1] = dummy[len_one + 1] + dummy[start_from]+ dummy[x]
                                         dummy[start_from] = 0
                                         dummy[x]= 0
                                     
@@ -343,12 +339,12 @@ def greedy(player_no,board,len_one):
                                         
 
                                                                                                                                                                                           
-                                        if (max_eval < (dummy[len_one] - dummy[len_one+1])):
-                                                max_eval = dummy[len_one] - dummy[len_one+1]
+                                        if (max_eval < (dummy[len_one+1] - dummy[len_one])):
+                                                max_eval = dummy[len_one+1] - dummy[len_one]
                                                 final = list(dummy)
                                                 #final_two = list(dummy_two)
 
-                                        elif ((picked_value == 0) and (start_from < len_one)):
+                                        elif ((picked_value == 0) and (start_from > len_one + 1)):
                                                 break
                                         
                                 #conditon 3 - Just dropping beads one by one
@@ -356,17 +352,17 @@ def greedy(player_no,board,len_one):
                                 else:
                                         print 'AT CONDITION 3'
                                         dummy[start_from] += 1
-                                        start_from += 1
+                                        start_from -= 1
                
                         else: # more beads - so adding to player 2's board
-                                print 'In PLayer 2 board side'
+                                print 'In PLayer 1 board side'
                                 print 'Present board condition is '
                                 for y in dummy:
                                         print y,
                                 print
                               
 
-                                if(picked_value > 0 and m == len_one + 1):
+                                if(picked_value > 0 and k == len_one):
                                         print "SKIPPING"
                                         start_from = 0
                                                                                      
