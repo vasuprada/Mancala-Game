@@ -236,22 +236,22 @@ def greedy(player_no,board,len_one):
                 #picked_value = dummy_one[picked_index]
                 picked_value = dummy[picked_index]
                 print 'picked value:',picked_value
-                start_from = start+1 #j
+                start_from = start-1 #j
                 print 'starting from:',start_from
                 #len_one = len(dummy_one)-1 #k
                 print 'length of board 2:',len_one
-                m = len(dummy)-1
+                #m = len(dummy)-1
                 dummy[picked_index] = 0
 
                 while picked_value != 0:
                         print 'picked_value is:',picked_value              
                         print 'Outside start_from is :',start_from
                          
-                        if start_from <= m:
+                        if start_from >= len_one+1:
                                 picked_value -= 1
                                 #condition 1- ENDS IN MANCALA-Free turn
-                                if (start_from == len_one+2) and (picked_value == 0):
-                                        dummy[len_one]+= 1
+                                if (start_from == len_one+1) and (picked_value == 0):
+                                        dummy[len_one+1] += 1
                                         print 'AT CONDITION 1'
                                         flag = 0
                                         flag2 = 0
@@ -261,7 +261,7 @@ def greedy(player_no,board,len_one):
                                                   flag = 1
                                                   break
                                                                                                                                                                                                 
-                                        for x in range(len_one+2,len(dummy)-1):
+                                        for x in range(len_one+2,len(dummy)):
                                                 if dummy[x]!=0:
                                                   flag2 = 1
                                                   break
@@ -337,8 +337,6 @@ def greedy(player_no,board,len_one):
                                         print '******************'
                                         
                                         
-
-                                                                                                                                                                                          
                                         if (max_eval < (dummy[len_one+1] - dummy[len_one])):
                                                 max_eval = dummy[len_one+1] - dummy[len_one]
                                                 final = list(dummy)
@@ -348,33 +346,30 @@ def greedy(player_no,board,len_one):
                                                 break
                                         
                                 #conditon 3 - Just dropping beads one by one
-
                                 else:
                                         print 'AT CONDITION 3'
                                         dummy[start_from] += 1
                                         start_from -= 1
                
-                        else: # more beads - so adding to player 2's board
+                        else: # more beads - so adding to player 1's board
                                 print 'In PLayer 1 board side'
                                 print 'Present board condition is '
                                 for y in dummy:
                                         print y,
                                 print
-                              
-
-                                if(picked_value > 0 and k == len_one):
+                              ` #start_from = 0
+                                if(picked_value > 0 and start_from == len_one):
                                         print "SKIPPING"
                                         start_from = 0
-                                                                                     
-                                while(picked_value!= 0 and m > len_one + 1):
+                                                          
+                                while(picked_value!= 0 and start_from < len_one ):
                                         picked_value -= 1
-                                        print 'm is :',m
-                                        dummy[m] += 1
-                                        m -= 1
-                                        print 'm is:',m
+                                        #print 'm is :',m
+                                        dummy[start_from] += 1
+                                        start_from += 1
+                                        #print 'm is:',m
                                         print 'picked_value is',picked_value
-                        
-                             
+                                
                                 if picked_value == 0:
                                         flag1 = 0
                                         for u in range(0,len_one):
@@ -387,14 +382,8 @@ def greedy(player_no,board,len_one):
                                                         if dummy[n]!=0:
                                                           dummy[n]=0
                                                         
-                                        if flagger == 1:# If evals are same, tie breaking on order
-                                                if (max_eval <= dummy[len_one] - dummy[len_one+1]):
-                                                    max_eval = dummy[len_one] - dummy[len_one+1]
-                                                    final = list(dummy)
-                                                    #final_two = list(dummy_two)
-                                        else: 
-                                                if max_eval < dummy[len_one] - dummy[len_one+1]:
-                                                    max_eval = dummy[len_one] - dummy[len_one+1]
+                                        if max_eval < dummy[len_one + 1] - dummy[len_one]:
+                                                    max_eval = dummy[len_one+1] - dummy[len_one]
                                                     final = list(dummy)
                                                     #final_two = list(dummy_two)
 
@@ -405,19 +394,6 @@ def greedy(player_no,board,len_one):
                                         print 'Last start from is : ',start_from
                                         print 'Last picked value',picked_value    
     
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
                 dummy = list(board)
                 #dummy_two = list(board_two)
