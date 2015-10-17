@@ -220,7 +220,13 @@ def greedy(player_no,board,len_one):
                                                 print
                                                
                                                 print 'Last start from is : ',start_from
-                                                print 'Last picked value',picked_value                                                                             
+                                                print 'Last picked value',picked_value
+                        dummy = list(board)
+                        #dummy_two = list(board_two)
+                        for y in dummy:
+                            print y,
+                        print
+                        
         else:#player 2
                 for start in range(len_one+2,len(dummy)):
                         print 'start is',start
@@ -390,11 +396,11 @@ def greedy(player_no,board,len_one):
                                           print 'Last start from is : ',start_from
                                           print 'Last picked value',picked_value
     
-                dummy = list(board)
-                #dummy_two = list(board_two)
-                for y in dummy:
-                  print y,
-                print
+                        dummy = list(board)
+                        #dummy_two = list(board_two)
+                        for y in dummy:
+                            print y,
+                        print
                
                                                         
     
@@ -439,19 +445,4 @@ if task == 1:
         print final[len_one]
         print final[len_one+1]
                 
-        '''else:   # Reversing the Board for Player 2
-                board_p2 = list(reversed(board))
-                flagger = 1 # Tie Breaking based on order
-                greedy(player_no,board_p2,len_one)
-                final_p2 = list(reversed(final))
-               
-                              
-                for i in range(0,len_one):
-                    print final_p2[i],
-                print
-                               
-                for j in range(len_one+2,len(board)):
-                        print final_p2[j],
-                print
-                print final_p2[len_one]
-                print final_p2[len_one+1]'''
+        
