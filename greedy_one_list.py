@@ -7,12 +7,9 @@ global board_two
 global board_one
 global mancala_two
 global mancala_one
-global final_one
-global final_two
 global flagger
 global board 
-global len_one
-global len_two
+
 
 task=0
 player_no=0
@@ -21,38 +18,32 @@ board_two=""
 board_one=""
 mancala_two=""
 mancala_one=""
-final_one =""
-final_two =""
 max_eval=-1
 flagger = 0
 board = ""
-len_one = 0
-len_two = 0
+final = ""
+
                                         
-def greedy(player_no,board):
+def greedy(player_no,board,len_one):
         global final
         global max_eval
         global flagger
-        #dummy_one = list(board_one)
-        #dummy_two = list(board_two)
+        
+      
         dummy = list(board)
 
         for y in dummy:
                 print y,
         print
-        '''for x in dummy_one:
-                print x,
-        print
-        print'''
-         
+               
             
-         
+        
         for start in range(0,len_one):
                 print 'start is',start
-                #if dummy_one[start] == 0:
-                    dummy[start] == 0:
-                        print 'start is:',start
-                        continue
+                if dummy[start] == 0:
+                    dummy[start] == 0
+                    print 'start is:',start
+                    continue
         
                 picked_index = start
                 print 'picked index',picked_index
@@ -112,11 +103,7 @@ def greedy(player_no,board):
                                                 print y,
                                         print
                                         print '******************'                                                            
-                                        '''for x in dummy_one:
-                                            print x,
-                                        print
-                                        print '******************'
-                                        '''
+                                       
 
                                         # Either or Both Boards Became empty
                                         if (flag2 == 0 or flag == 0):
@@ -125,7 +112,7 @@ def greedy(player_no,board):
                                                 break
                                         #greedy call
                                         greedy(player_no,dummy,len_one)
-                                        #break
+                                        
              
                                 #condition 2- ENDS IN EMPTY PIT ON SAME SIDE  
                                 elif (picked_value == 0) and (dummy[start_from] == 0):
@@ -134,23 +121,25 @@ def greedy(player_no,board):
                                         flag = 0
                                         flag2 = 0
                                         dummy[start_from] = 1
-                                        dummy[len_one] += dummy[start_from]+ dummy[len_one+2]
+                                        x = start_from + len_one + 2
+                                        #print x
+                                        dummy[len_one] = dummy[len_one] + dummy[start_from]+ dummy[x]
                                         dummy[start_from] = 0
-                                        dummy[len_one+2]= 0
+                                        dummy[x]= 0
                                     
-                                          for u in range(0,len_one):
+                                        for u in range(0,len_one):
                                                 if dummy[u]!=0:
                                                   flag = 1
                                                   break
                                                                                                                                                                                                 
-                                        for x in range(len_one+2,len(dummy)-1):
+                                        for x in range(len_one+2,len(dummy)):
                                                 if dummy[x]!=0:
                                                   flag2 = 1
                                                   break
                                                                                                         
                                         if flag == 0:
                                                 for n in range(len_one+2,len(dummy)):
-                                                        dummy_two[len_one+1] += dummy_two[n]
+                                                        dummy[len_one+1] += dummy[n]
                                                         if(dummy[n]!=0):
                                                                 dummy[n]=0
                                                                                                             
@@ -164,10 +153,7 @@ def greedy(player_no,board):
                                                 print y,
                                         print
                                         print '******************'
-                                        '''for x in dummy_one:
-                                                print x,
-                                        print
-                                        '''
+                                        
                                         
 
                                                                                                                                                                                           
@@ -192,11 +178,7 @@ def greedy(player_no,board):
                                 for y in dummy:
                                         print y,
                                 print
-                                '''
-                                for x in dummy_one:
-                                        print x,
-                                print
-                                '''
+                              
 
                                 if(picked_value > 0 and m == len_one + 1):
                                         print "SKIPPING"
@@ -223,25 +205,21 @@ def greedy(player_no,board):
                                                         if dummy[n]!=0:
                                                           dummy[n]=0
                                                         
-                                        '''if flagger == 1:
-                                                if (max_eval <= dummy_one[len_one] - dummy_two[0]):
-                                                        max_eval = dummy_one[len_one] - dummy_two[0]
-                                                        final_one = list(dummy_one)
-                                                        final_two = list(dummy_two)
-                                        else:'''  
-                                                if (max_eval < (dummy[len_one] - dummy[len_one+1])):
-                                                        max_eval = dummy[len_one] - dummy[len_one+1]
-                                                        final = list(dummy)
-                                                        #final_two = list(dummy_two)
+                                        if flagger == 1:# If evals are same, tie breaking on order
+                                                if (max_eval <= dummy[len_one] - dummy[len_one+1]):
+                                                    max_eval = dummy[len_one] - dummy[len_one+1]
+                                                    final = list(dummy)
+                                                    #final_two = list(dummy_two)
+                                        else: 
+                                                if max_eval < dummy[len_one] - dummy[len_one+1]:
+                                                    max_eval = dummy[len_one] - dummy[len_one+1]
+                                                    final = list(dummy)
+                                                    #final_two = list(dummy_two)
+
                                         for y in final:
-                                                print y,
+                                            print y,
                                         print
-                                        '''
-                                        for x in final_one:
-                                                print x,
-                                        
-                                        print
-                                        '''
+                                       
                                         print 'Last start from is : ',start_from
                                         print 'Last picked value',picked_value                                                                             
                              
@@ -251,11 +229,7 @@ def greedy(player_no,board):
                 for y in dummy:
                   print y,
                 print
-                '''for x in dummy_one:
-                        print x,
-                print
-                '''
-                #start = 0
+               
                                                         
     
 #Main function starts here
@@ -272,46 +246,46 @@ board_two = [ int(x) for x in lis_input[3] ]
 board_one = [ int(x) for x in lis_input[4] ]
 mancala_two = int(lis_input[5][0])
 mancala_one = int(lis_input[6][0])
+
+# player 1 with mancala at the end
 board_one.append(mancala_one)
-board_two = [mancala_two] + board_two
 len_one = len(board_one)-1
-#len_two = len(board_two)-1
-#print task - Making it a single array
+
 board = list(board_one)
-board.append(mancala_one) # player 1 with mancala at the end
 board.append(mancala_two)
-board.append(board_two)
-#board_two = [mancala_two] + board_two     # player 2 with mancala in the beginning
+
+# player 2 with mancala in the beginning
+for i in board_two:
+    board.append(i)
+    
+
 if task == 1:
         if player_no == 1:
                 greedy(player_no,board,len_one)
                 
-                # change this - print final
-                for i in range(0,len(dummy)):
-                        print final[i],
+                for i in range(0,len_one):
+                    print final[i],
                 print
-                '''for j in range(0,len_one):
-                        print final_one[j],
+                               
+                for j in range(len_one+2,len(board)):
+                        print final[j],
                 print
-                print final_two[0]
-                print final_one[len_one]
-                '''
-        else:
-                board_two_p2 = list(reversed(board_one))
-                board_one_p1 = list(reversed(board_two))
-                flagger = 1
-                greedy(player_no,board_two_p2,board_one_p1)
-                len_one = len(board_one_p1)-1
-                len_two = len(board_two_p2)-1
-                #final_two = list(reversed(final_one))
-                final_one_p1 = list(reversed(final_two))
-                final_two_p2 = list(reversed(final_one))
+                print final[len_one]
+                print final[len_one+1]
+                
+        else:   # Reversing the Board for Player 2
+                board_p2 = list(reversed(board))
+                flagger = 1 # Tie Breaking based on order
+                greedy(player_no,board_p2,len_one)
+                final_p2 = list(reversed(final))
                
-                for i in range(1,len_two+1):
-                        print final_two_p2[i],
+                              
+                for i in range(0,len_one):
+                    print final_p2[i],
                 print
-                for j in range(0,len_one):
-                        print final_one_p1[j],
+                               
+                for j in range(len_one+2,len(board)):
+                        print final_p2[j],
                 print
-                print final_two_p2[0]
-                print final_one_p1[len_one]
+                print final_p2[len_one]
+                print final_p2[len_one+1]
